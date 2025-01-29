@@ -64,7 +64,7 @@ $sources = $conn->query($sql_sources);
                 <div class="relative">
                     <label class="block text-gray-700 mb-2">Amount</label>
                     <div class="relative">
-                        <span class="absolute left-3 top-3 text-gray-500">$</span>
+                        <span class="absolute left-3 top-3 text-gray-500">₱</span>
                         <input type="number" name="amount" step="0.01" required
                                class="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                placeholder="0.00">

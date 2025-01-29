@@ -49,32 +49,53 @@ $categories = $conn->query($sql_categories);
     <title>Expenses Management</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("w-16");
+            document.getElementById("sidebar").classList.toggle("w-64");
+            let links = document.querySelectorAll(".sidebar-text");
+            links.forEach(link => link.classList.toggle("hidden"));
+        }
+    </script>
 </head>
 <body class="bg-gray-100">
     <div class="flex">
         <!-- Sidebar (same as dashboard) -->
-        <div class="w-64 h-screen bg-blue-800 text-white fixed">
-            <div class="p-4">
-                <h2 class="text-2xl font-bold mb-8">ExpenseTracker</h2>
-                <nav>
-                    <a href="dashboard.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-home mr-2"></i> Dashboard
-                    </a>
-                    <a href="expenses.php" class="block py-2 px-4 bg-blue-700 rounded mb-2">
-                        <i class="fas fa-receipt mr-2"></i> Expenses
-                    </a>
-                    <a href="income.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-money-bill-wave mr-2"></i> Income
-                    </a>
-                    <a href="budgets.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-piggy-bank mr-2"></i> Budgets
-                    </a>
-                    <a href="reports.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-chart-bar mr-2"></i> Reports
-                    </a>
-                </nav>
-            </div>
+        <!-- Sidebar -->
+    <div id="sidebar" class="w-64 h-screen bg-blue-800 text-white fixed transition-all duration-300">
+        <div class="p-4 flex justify-between">
+            <h2 class="text-2xl font-bold sidebar-text">ExpenseTracker</h2>
+            <button onclick="toggleSidebar()" class="focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+        <nav>
+            <a href="#" class="block py-4 px-4 hover:bg-blue-700  ">
+                <i class="fas fa-home mx-auto"></i>
+                <span class="ml-4 sidebar-text">Dashboard</span>
+            </a>
+            <a href="expenses.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-receipt mx-auto"></i>
+                <span class="ml-4 sidebar-text">Expenses</span>
+            </a>
+            <a href="income.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-money-bill-wave mx-auto"></i>
+                <span class="ml-4 sidebar-text">Income</span>
+            </a>
+            <a href="budgets.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-piggy-bank mx-auto"></i>
+                <span class="ml-4 sidebar-text">Budgets</span>
+            </a>
+            <a href="reports.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-chart-bar mx-auto"></i>
+                <span class="ml-4 sidebar-text">Reports</span>
+            </a>
+            <a href="logout.php" class="block py-4 px-4 hover:bg-red-700  items-center mt-8">
+                <i class="fas fa-sign-out-alt mx-auto"></i>
+                <span class="ml-4 sidebar-text">Logout</span>
+            </a>
+        </nav>
+    </div>
 
         <!-- Main Content -->
         <div class="ml-64 flex-1 p-8">
@@ -154,7 +175,7 @@ $categories = $conn->query($sql_categories);
                                     <?php echo htmlspecialchars($expense['description']); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-red-600 font-medium">
-                                    -$<?php echo number_format($expense['amount'], 2); ?>
+                                    -₱<?php echo number_format($expense['amount'], 2); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="edit_expense.php?id=<?php echo $expense['id']; ?>" 

@@ -38,32 +38,52 @@ $sources = $conn->query($sql_sources);
     <title>Income Management</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("w-16");
+            document.getElementById("sidebar").classList.toggle("w-64");
+            let links = document.querySelectorAll(".sidebar-text");
+            links.forEach(link => link.classList.toggle("hidden"));
+        }
+    </script>
 </head>
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-64 h-screen bg-blue-800 text-white fixed">
-            <div class="p-4">
-                <h2 class="text-2xl font-bold mb-8">ExpenseTracker</h2>
-                <nav>
-                    <a href="dashboard.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-home mr-2"></i> Dashboard
-                    </a>
-                    <a href="expenses.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-receipt mr-2"></i> Expenses
-                    </a>
-                    <a href="income.php" class="block py-2 px-4 bg-blue-700 rounded mb-2">
-                        <i class="fas fa-money-bill-wave mr-2"></i> Income
-                    </a>
-                    <a href="budgets.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-piggy-bank mr-2"></i> Budgets
-                    </a>
-                    <a href="reports.php" class="block py-2 px-4 hover:bg-blue-700 rounded mb-2">
-                        <i class="fas fa-chart-bar mr-2"></i> Reports
-                    </a>
-                </nav>
-            </div>
+         <!-- Sidebar -->
+    <div id="sidebar" class="w-64 h-screen bg-blue-800 text-white fixed transition-all duration-300">
+        <div class="p-4 flex justify-between">
+            <h2 class="text-2xl font-bold sidebar-text">ExpenseTracker</h2>
+            <button onclick="toggleSidebar()" class="focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+        <nav>
+            <a href="#" class="block py-4 px-4 hover:bg-blue-700  ">
+                <i class="fas fa-home mx-auto"></i>
+                <span class="ml-4 sidebar-text">Dashboard</span>
+            </a>
+            <a href="expenses.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-receipt mx-auto"></i>
+                <span class="ml-4 sidebar-text">Expenses</span>
+            </a>
+            <a href="income.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-money-bill-wave mx-auto"></i>
+                <span class="ml-4 sidebar-text">Income</span>
+            </a>
+            <a href="budgets.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-piggy-bank mx-auto"></i>
+                <span class="ml-4 sidebar-text">Budgets</span>
+            </a>
+            <a href="reports.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
+                <i class="fas fa-chart-bar mx-auto"></i>
+                <span class="ml-4 sidebar-text">Reports</span>
+            </a>
+            <a href="logout.php" class="block py-4 px-4 hover:bg-red-700  items-center mt-8">
+                <i class="fas fa-sign-out-alt mx-auto"></i>
+                <span class="ml-4 sidebar-text">Logout</span>
+            </a>
+        </nav>
+    </div>
 
         <!-- Main Content -->
         <div class="ml-64 flex-1 p-8">
@@ -102,8 +122,33 @@ $sources = $conn->query($sql_sources);
                             <i class="fas fa-filter mr-2"></i>Apply Filters
                         </button>
                     </div>
+
                 </form>
+                <button onclick="openModal()" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+    <i class="fas fa-plus-circle mr-2"></i> Add Source
+</button>
             </div>
+
+            <!-- Modal for Adding Categories -->
+<div id="addCategoryModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4">Add New Income Category</h2>
+        <form action="add_income_category.php" method="POST">
+            <div class="mb-4">
+                <label for="category_name" class="block text-sm text-gray-600 mb-1">Source Name</label>
+                <input type="text" name="category_name" id="category_name" class="w-full px-4 py-2 border rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label for="category_description" class="block text-sm text-gray-600 mb-1">Description</label>
+                <textarea name="category_description" id="category_description" class="w-full px-4 py-2 border rounded-lg" rows="3"></textarea>
+            </div>
+            <div class="flex justify-between">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Add Category</button>
+                <button type="button" onclick="closeModal()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
 
             <!-- Income Table -->
             <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -132,7 +177,7 @@ $sources = $conn->query($sql_sources);
                                     <?php echo htmlspecialchars($income['description']); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">
-                                    +$<?php echo number_format($income['amount'], 2); ?>
+                                    +₱<?php echo number_format($income['amount'], 2); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="edit_income.php?id=<?php echo $income['id']; ?>" 
@@ -185,6 +230,17 @@ $sources = $conn->query($sql_sources);
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize any necessary JavaScript features
         });
+        function openModal() {
+        document.getElementById('addCategoryModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('addCategoryModal').classList.add('hidden');
+    }
+    // Display Toast
+    setTimeout(() => {
+        document.getElementById('toast')?.classList.add('hidden');
+    }, 5000);
     </script>
 </body>
 </html>
