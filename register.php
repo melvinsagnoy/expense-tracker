@@ -22,6 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--color-red-800); 
+            color: black;
+            text-align: center;
+            padding: 0.5rem;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex justify-center items-center min-h-screen p-4">
@@ -70,6 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </p>
             </div>
         </div>
+        
+    </div>
+    <div class="footer">
+        <p>&copy; <?php echo date("Y"); ?> KwartaTally. All rights reserved.</p>
     </div>
 </body>
 </html>
