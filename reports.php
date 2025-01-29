@@ -82,18 +82,18 @@ $trend = $conn->query($sql_trend);
          <!-- Sidebar -->
             <div id="sidebar" class="w-64 h-screen bg-blue-800 text-white fixed transition-all duration-300">
                 <div class="p-4 flex justify-between">
-                    <h2 class="text-2xl font-bold sidebar-text">ExpenseTracker</h2>
+                    <h2 class="text-2xl font-bold sidebar-text">KwartaTally</h2>
                     <button onclick="toggleSidebar()" class="focus:outline-none">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
                 <nav>
-                    <a href="#" class="block py-4 px-4 hover:bg-blue-700  ">
+                    <a href="dashboard.php" class="block py-4 px-4 hover:bg-blue-700  ">
                         <i class="fas fa-home mx-auto"></i>
                         <span class="ml-4 sidebar-text">Dashboard</span>
                     </a>
                     <a href="expenses.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
-                        <i class="fas fa-receipt mx-auto"></i>
+                    &nbsp;<i class="fas fa-receipt mx-auto"></i>
                         <span class="ml-4 sidebar-text">Expenses</span>
                     </a>
                     <a href="income.php" class="block py-4 px-4 hover:bg-blue-700  items-center">
